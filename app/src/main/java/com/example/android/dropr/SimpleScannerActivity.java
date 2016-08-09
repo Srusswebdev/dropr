@@ -19,6 +19,8 @@ public class SimpleScannerActivity extends MainActivity implements ZXingScannerV
 
     private ZXingScannerView mScannerView;
 
+
+
     @Override
     public void onCreate(Bundle state) {
         super.onCreate(state);
@@ -42,12 +44,20 @@ public class SimpleScannerActivity extends MainActivity implements ZXingScannerV
 
     @Override
     public void handleResult(Result rawResult) {
+
+        //initialize a database connection
+        DatabaseAccess dbaccess = DatabaseAccess.getInstance(this);
+        dbaccess.open();
         // setting a test string variable for the TAG to see what it does.
         String TAG = "Dropr";
-
+        String rawContent = rawResult.getText();
+        String name = dbaccess.getInfo(rawContent);
         //Toast.makeText(this, "Content - " + rawResult.getText() +
         //        ", Format = " + rawResult.getBarcodeFormat().toString(), Toast.LENGTH_SHORT).show();
 
+
+        // close the database connection
+        dbaccess.close();
 
 
         /**
@@ -55,12 +65,13 @@ public class SimpleScannerActivity extends MainActivity implements ZXingScannerV
          */
 
         AlertDialog.Builder scanInfo = new AlertDialog.Builder(this);
-
-
         String messageContent = "Content - " + rawResult.getText();
         String messageFormat = "Format - " + rawResult.getBarcodeFormat().toString() + ".";
+
+
+
         scanInfo.setTitle("Scan Information:");
-        scanInfo.setMessage(messageContent + "\n" + messageFormat);
+        scanInfo.setMessage(messageContent + "\n" + messageFormat + "\n" + name);
         scanInfo.setCancelable(true);
 
         scanInfo.setPositiveButton(
