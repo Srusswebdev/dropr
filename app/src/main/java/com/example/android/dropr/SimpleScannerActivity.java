@@ -15,9 +15,6 @@ import java.util.List;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
-/**
- * Created by Shelby on 8/8/2016.
- */
 public class SimpleScannerActivity extends MainActivity implements ZXingScannerView.ResultHandler {
 
     private ZXingScannerView mScannerView;
@@ -86,7 +83,7 @@ public class SimpleScannerActivity extends MainActivity implements ZXingScannerV
                             public void run() {
                                 mScannerView.resumeCameraPreview(SimpleScannerActivity.this);
                             }
-                        }, 100);
+                        }, 1000);
                     }
                 });
 
